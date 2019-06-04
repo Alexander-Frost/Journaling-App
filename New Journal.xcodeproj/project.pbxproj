@@ -34,6 +34,7 @@
 		FA5C0DCC22A7034E00F00AEE /* New Journal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "New Journal.xcdatamodel"; sourceTree = "<group>"; };
 		FA5C0DCF22A703BE00F00AEE /* Entry+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+Convenience.swift"; sourceTree = "<group>"; };
 		FA5C0DD122A706A300F00AEE /* EntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryController.swift; sourceTree = "<group>"; };
+		FA5C0DD322A7255600F00AEE /* New Journal 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "New Journal 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,9 +414,10 @@
 		FA5C0DCB22A7034E00F00AEE /* New Journal.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FA5C0DD322A7255600F00AEE /* New Journal 2.xcdatamodel */,
 				FA5C0DCC22A7034E00F00AEE /* New Journal.xcdatamodel */,
 			);
-			currentVersion = FA5C0DCC22A7034E00F00AEE /* New Journal.xcdatamodel */;
+			currentVersion = FA5C0DD322A7255600F00AEE /* New Journal 2.xcdatamodel */;
 			path = "New Journal.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -21,17 +21,20 @@ class EntryDetailViewController: UIViewController {
     
     @IBOutlet var entryTextView: UITextView!
     @IBOutlet var textField: UITextField!
+    @IBOutlet var segmentedControl: UISegmentedControl!
     
     // MARK: - Actions
     
     @IBAction func addEntryBtnPressed(_ sender: UIBarButtonItem) {
         guard let titleText = textField.text else {return}
         guard let bodyText = entryTextView.text else {return}
+        let index = segmentedControl.selectedSegmentIndex
+        let mood = Mood.allMoods[index]
         
         if let entry = entry {
-            entryController?.update(title: titleText, bodyText: bodyText, entry: entry)
+            entryController?.update(title: titleText, bodyText: bodyText, entry: entry, mood: mood)
         } else {
-            entryController?.create(title: titleText, bodyText: bodyText)
+            entryController?.create(title: titleText, bodyText: bodyText, mood: mood)
         }
         
         navigationController?.popViewController(animated: true)
@@ -54,6 +57,15 @@ class EntryDetailViewController: UIViewController {
         textField.text = entry.title
         entryTextView.text = entry.bodyText
         title = entry.title
+        
+        let mood: Mood
+        if let myMood = entry.mood {
+            mood = Mood(rawValue: myMood)!
+        } else {
+            mood = .happy
+        }
+        
+        segmentedControl.selectedSegmentIndex = Mood.allMoods.firstIndex(of: mood)!
     }
 
     /*
