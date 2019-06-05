@@ -11,9 +11,9 @@ import CoreData
 
 class EntryController {
     
-    var entries: [Entry] { // allows us to instantly get an Entry from Persistent Store
-        return loadFromPersistentStore()
-    }
+//    var entries: [Entry] { // allows us to instantly get an Entry from Persistent Store
+//        return loadFromPersistentStore()
+//    }
     
     func saveToPersistentStore(){
         let moc = CoreDataStack.shared.mainContext
@@ -25,18 +25,18 @@ class EntryController {
         }
     }
     
-    func loadFromPersistentStore() -> [Entry] {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        
-        let moc = CoreDataStack.shared.mainContext
-        
-        do {
-            return try moc.fetch(fetchRequest)
-        } catch let error {
-            NSLog("Error fetching tasks: \(error)")
-            return []
-        }
-    }
+//    func loadFromPersistentStore() -> [Entry] {
+//        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+//
+//        let moc = CoreDataStack.shared.mainContext
+//
+//        do {
+//            return try moc.fetch(fetchRequest)
+//        } catch let error {
+//            NSLog("Error fetching tasks: \(error)")
+//            return []
+//        }
+//    }
     
     // MARK: - CRUD
     
@@ -51,10 +51,6 @@ class EntryController {
         entry.mood = mood.rawValue
         entry.timestamp = Date()
         
-//        entry.setValue(title, forKey: "title")
-//        entry.setValue(bodyText, forKey: "bodyText")
-//        entry.setValue(mood, forKey: "mood")
-//        entry.setValue(Date(), forKey: "timestamp")
         saveToPersistentStore()
     }
     
