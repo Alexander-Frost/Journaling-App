@@ -18,6 +18,7 @@
 		FA5C0DCD22A7034E00F00AEE /* New Journal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA5C0DCB22A7034E00F00AEE /* New Journal.xcdatamodeld */; };
 		FA5C0DD022A703BE00F00AEE /* Entry+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C0DCF22A703BE00F00AEE /* Entry+Convenience.swift */; };
 		FA5C0DD222A706A300F00AEE /* EntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C0DD122A706A300F00AEE /* EntryController.swift */; };
+		FA5C0DDA22A8575E00F00AEE /* EntryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C0DD922A8575E00F00AEE /* EntryRepresentation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		FA5C0DCF22A703BE00F00AEE /* Entry+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+Convenience.swift"; sourceTree = "<group>"; };
 		FA5C0DD122A706A300F00AEE /* EntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryController.swift; sourceTree = "<group>"; };
 		FA5C0DD322A7255600F00AEE /* New Journal 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "New Journal 2.xcdatamodel"; sourceTree = "<group>"; };
+		FA5C0DD922A8575E00F00AEE /* EntryRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepresentation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				FA5C0DC622A702B300F00AEE /* CoreDataStack.swift */,
 				FA5C0DCB22A7034E00F00AEE /* New Journal.xcdatamodeld */,
 				FA5C0DCF22A703BE00F00AEE /* Entry+Convenience.swift */,
+				FA5C0DD922A8575E00F00AEE /* EntryRepresentation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 				FA5C0DBF22A7016C00F00AEE /* EntryDetailViewController.swift in Sources */,
 				FA5C0DA922A6FEA400F00AEE /* AppDelegate.swift in Sources */,
 				FA5C0DD222A706A300F00AEE /* EntryController.swift in Sources */,
+				FA5C0DDA22A8575E00F00AEE /* EntryRepresentation.swift in Sources */,
 				FA5C0DD022A703BE00F00AEE /* Entry+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

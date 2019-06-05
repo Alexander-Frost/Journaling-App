@@ -31,6 +31,25 @@ extension Entry {
         self.mood = mood.rawValue
     }
     
+    // creates Entry from EntryRepresentation
+    convenience init?(entryRepresentation: EntryRepresentation, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) { // optional bc it may not pull data from Firebase
+        guard let mood = Mood(rawValue: entryRepresentation.mood) else {return nil}
+        self.init(title: entryRepresentation.title,
+            bodyText: entryRepresentation.bodyText,
+            timestamp: entryRepresentation.timestamp,
+            mood: mood, identifier: entryRepresentation.identifier, context: context)
+    }
+    
+    // converts Entry to EntryRepresentation before going to JSON
+    var entryRepresentation: EntryRepresentation? {
+        guard let title = title,
+            let bodyText = bodyText,
+            let identifier = identifier,
+            let mood = mood else {return nil}
+        
+        return EntryRepresentation(title: title, bodyText: bodyText, identifier: identifier, mood: mood, timestamp: timestamp ?? Date())
+    }
+    
     
 }
 
