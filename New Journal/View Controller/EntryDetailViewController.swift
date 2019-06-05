@@ -32,7 +32,10 @@ class EntryDetailViewController: UIViewController {
         let mood = Mood.allMoods[index]
         
         if let entry = entry {
-            entryController?.update(title: titleText, bodyText: bodyText, entry: entry, mood: mood)
+//            entryController?.update(entry: entry, entryRepresentation: <#T##EntryRepresentation#>)
+            
+            // not sure if this is the correct one or if we use new update function here, above
+            entryController?.updateOld(title: titleText, bodyText: bodyText, entry: entry, mood: mood)
         } else {
             entryController?.create(title: titleText, bodyText: bodyText, mood: mood)
         }
