@@ -13,7 +13,7 @@ class EntriesTableViewController: UITableViewController, NSFetchedResultsControl
     
     lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "mood", ascending: true), NSSortDescriptor(key: "timestamp", ascending: true)]
         
         let moc = CoreDataStack.shared.mainContext
 
@@ -96,19 +96,19 @@ class EntriesTableViewController: UITableViewController, NSFetchedResultsControl
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0 //entryController.entries.count
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntryCell", for: indexPath) as! EntryTableViewCell
         
-        cell.entry = fetchedResultsController.object(at: indexPath) //entryController.entries[indexPath.row]
+        cell.entry = fetchedResultsController.object(at: indexPath)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            entryController.delete(entry: fetchedResultsController.object(at: indexPath)) //entryController.entries[indexPath.row]
+            entryController.delete(entry: fetchedResultsController.object(at: indexPath))
             
 //            tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()

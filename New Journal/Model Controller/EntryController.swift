@@ -71,10 +71,9 @@ class EntryController {
     }
     
     func delete(entry: Entry){
-        let moc = CoreDataStack.shared.mainContext
+        CoreDataStack.shared.mainContext.delete(entry)
         // 1. Delete from CoreData
         deleteEntryFromServer(entry: entry)
-//        moc.delete(entry)
         // 2. Save deletion
         saveToPersistentStore()
         
@@ -125,25 +124,24 @@ class EntryController {
             } .resume()
     }
     
-    func fetchSingleEntryFromPersistentStore(identifier: String) -> Entry? {
+    func fetchSingleEntryFromPersistentStore(identifier: String, context: NSManagedObjectContext) -> Entry? {
         // 1. create fetch request from Entry
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
         
-        let moc = CoreDataStack.shared.mainContext
-        
-        var entry: Entry?
+        var result: Entry?
         
         do {
-            entry = try moc.fetch(fetchRequest).first
+            result = try context.fetch(fetchRequest).first
         } catch let fetchError {
             print("Error fetching single entry: \(fetchError.localizedDescription)")
         }
-        return entry
+        return result
     }
     
     func fetchEntriesFromServer(completion: @escaping CompletionHandler = { _ in}){
         let requestURL = baseURL.appendingPathExtension("json")
+        let backgroundContext = CoreDataStack.shared.container.newBackgroundContext()
         
         URLSession.shared.dataTask(with: requestURL)  { (data, _, error) in
             if let error = error {
@@ -156,7 +154,7 @@ class EntryController {
                 return completion(NSError())
             }
             
-            DispatchQueue.main.async {
+            backgroundContext.performAndWait {
                 do {
                     let entryRepresentationDict = try JSONDecoder().decode([String: EntryRepresentation].self, from: data)
                     let entryRepresentation = Array(entryRepresentationDict.values)
@@ -164,7 +162,7 @@ class EntryController {
                     for entryRep in entryRepresentation {
                         let uuid = entryRep.identifier
                         
-                        if let entry = self.fetchSingleEntryFromPersistentStore(identifier: entryRep.identifier) {              // if we already have a local Entry for this
+                        if let entry = self.fetchSingleEntryFromPersistentStore(identifier: entryRep.identifier, context: backgroundContext) { // if we already have a local Entry for this then update it
                             self.update(entry: entry, entryRepresentation: entryRep)
                         } else {
                             // create a new Entry in CoreData
@@ -173,8 +171,7 @@ class EntryController {
                     }
                     
                     // save changes to disk
-                    let moc = CoreDataStack.shared.mainContext
-                    try moc.save()
+                    try CoreDataStack.shared.save(context: backgroundContext)
                 } catch {
                     NSLog("Error decoding tasks: \(error)")
                     return completion(error)
