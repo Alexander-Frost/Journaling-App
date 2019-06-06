@@ -154,31 +154,38 @@ class EntryController {
                 return completion(NSError())
             }
             
-            backgroundContext.performAndWait {
-                do {
-                    let entryRepresentationDict = try JSONDecoder().decode([String: EntryRepresentation].self, from: data)
-                    let entryRepresentation = Array(entryRepresentationDict.values)
-                    
-                    for entryRep in entryRepresentation {
-                        let uuid = entryRep.identifier
-                        
-                        if let entry = self.fetchSingleEntryFromPersistentStore(identifier: entryRep.identifier, context: backgroundContext) { // if we already have a local Entry for this then update it
-                            self.update(entry: entry, entryRepresentation: entryRep)
-                        } else {
-                            // create a new Entry in CoreData
-                            let _ = Entry(entryRepresentation: entryRep)
-                        }
-                    }
-                    
-                    // save changes to disk
-                    try CoreDataStack.shared.save(context: backgroundContext)
-                } catch {
-                    NSLog("Error decoding tasks: \(error)")
-                    return completion(error)
+            do {
+                let entryRepresentationDict = try JSONDecoder().decode([String: EntryRepresentation].self, from: data)
+                let entryRepresentation = Array(entryRepresentationDict.values)
+                
+                self.updateEntries(with: entryRepresentation, in: backgroundContext)
+                
+                // save changes to disk
+                try CoreDataStack.shared.save(context: backgroundContext)
+            } catch {
+                NSLog("Error decoding tasks: \(error)")
+                return completion(error)
+            }
+            completion(nil)
+            }.resume()
+    }
+    
+    private func updateEntries(with representations: [EntryRepresentation], in context: NSManagedObjectContext) {
+        context.performAndWait {
+            for entryRep in representations {
+                let identifier = entryRep.identifier
+                
+                let entry = self.fetchSingleEntryFromPersistentStore(identifier: identifier, context: context)
+                if let entry = entry, entry != entryRep {
+                    // if we have an Entry then update it
+                    self.update(entry: entry, entryRepresentation: entryRep)
+                } else if entry == nil {
+                    // if we have no Entry then create one
+                    _ = Entry(entryRepresentation: entryRep, context: context)
                 }
-                completion(nil)
             }
         }
     }
+    
     
 }
