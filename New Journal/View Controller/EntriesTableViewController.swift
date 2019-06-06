@@ -110,9 +110,13 @@ class EntriesTableViewController: UITableViewController, NSFetchedResultsControl
         if editingStyle == .delete {
             entryController.delete(entry: fetchedResultsController.object(at: indexPath)) //entryController.entries[indexPath.row]
             
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return fetchedResultsController.sections?[section].name
     }
 
     // MARK: - Navigation

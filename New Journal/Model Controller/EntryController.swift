@@ -73,9 +73,8 @@ class EntryController {
     func delete(entry: Entry){
         let moc = CoreDataStack.shared.mainContext
         // 1. Delete from CoreData
-        deleteEntryFromServer(entry: entry) { (_) in
-            moc.delete(entry)
-        }
+        deleteEntryFromServer(entry: entry)
+//        moc.delete(entry)
         // 2. Save deletion
         saveToPersistentStore()
         
